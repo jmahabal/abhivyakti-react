@@ -5,7 +5,7 @@ import {
   type Asset,
   type EntrySkeletonType,
 } from "contentful";
-import { config, validateConfig } from "../src/lib/config";
+import { validateConfig } from "../src/lib/config";
 import fs from "fs";
 import path from "path";
 
@@ -18,7 +18,6 @@ validateConfig();
 // Types based on your content model
 interface CastMemberFields {
   name: string;
-  hometown?: string;
   description?: string;
   contactInformation?: string;
   photo?: Asset;
@@ -27,18 +26,19 @@ interface CastMemberFields {
 interface PlayFields {
   title?: string;
   playwright?: string;
-  director?: Entry<{ fields: CastMemberFields }>[];
+  director?: Entry<CastMember>[];
   description?: string;
   date?: string;
-  cast?: Entry<{ fields: CastMemberFields }>[];
+  cast?: Entry<CastMember>[];
   location?: string;
   youtubeUrl?: string;
   photo?: Asset;
-  backstage?: Entry<{ fields: CastMemberFields }>[];
+  backstage?: Entry<CastMember>[];
 }
 
 interface HomePageFields {
   heroVideo?: Asset;
+  homepageHeroImage?: Asset;
 }
 
 interface CastMember extends EntrySkeletonType {
@@ -57,9 +57,9 @@ interface HomePage extends EntrySkeletonType {
 }
 
 const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-  environment: process.env.CONTENTFUL_ENVIRONMENT || "master",
+  space: process.env["CONTENTFUL_SPACE_ID"] || "",
+  accessToken: process.env["CONTENTFUL_ACCESS_TOKEN"] || "",
+  environment: process.env["CONTENTFUL_ENVIRONMENT"] || "master",
 });
 
 async function fetchAllContentfulData() {
@@ -68,7 +68,7 @@ async function fetchAllContentfulData() {
     const plays = await client.getEntries<Play>({
       content_type: "play",
       include: 2, // include linked entries 2 levels deep
-      order: ["-fields.date"], // newest first
+      order: ["-sys.createdAt"], // newest first
     });
 
     // Fetch all cast members

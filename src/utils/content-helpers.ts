@@ -17,6 +17,15 @@ export const formatDate = (dateString?: string) => {
   }
 };
 
+export const formatDateWithOrdinal = (dateString?: string) => {
+  if (!dateString) return null;
+  try {
+    return format(new Date(dateString), "MMMM do, yyyy");
+  } catch {
+    return dateString;
+  }
+};
+
 export const getPlaysByPerson = (
   plays: Entry<PlayEntry>[],
   memberId: string
@@ -39,24 +48,15 @@ export const getPlaysByPerson = (
 };
 
 export const getCastAndCrew = (play: Entry<PlayEntry>) => {
-  const directorEntries = play.fields.director as
-    | Entry<CastMemberEntry>[]
-    | undefined;
-  const castEntries = play.fields.cast as Entry<CastMemberEntry>[] | undefined;
+  const directorEntries = (play.fields.director ??
+    []) as Entry<CastMemberEntry>[];
+  const castEntries = (play.fields.cast ?? []) as Entry<CastMemberEntry>[];
 
-  const directors =
-    directorEntries
-      ?.map((d: Entry<CastMemberEntry>) => d.fields.name)
-      .filter(
-        (name: string | undefined): name is string => typeof name === "string"
-      ) ?? [];
+  const directors = directorEntries
+    .map((d) => String(d.fields.name))
+    .filter(Boolean);
 
-  const cast =
-    castEntries
-      ?.map((c: Entry<CastMemberEntry>) => c.fields.name)
-      .filter(
-        (name: string | undefined): name is string => typeof name === "string"
-      ) ?? [];
+  const cast = castEntries.map((c) => String(c.fields.name)).filter(Boolean);
 
   return {
     directors,

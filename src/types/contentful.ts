@@ -29,7 +29,6 @@ export interface ContentfulAsset {
 
 export interface CastMemberFields {
   name: string;
-  hometown?: string;
   description?: string;
   contactInformation?: string;
   photo?: ContentfulAsset;
@@ -50,6 +49,7 @@ export interface PlayFields {
 
 export interface HomePageFields {
   heroVideo?: ContentfulAsset;
+  homepageHeroImage?: ContentfulAsset;
 }
 
 export interface CastMemberEntry extends EntrySkeletonType {

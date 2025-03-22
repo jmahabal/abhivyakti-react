@@ -13,9 +13,9 @@ validateConfig();
 console.log("Creating Contentful client...");
 
 const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-  environment: process.env.CONTENTFUL_ENVIRONMENT || "master",
+  space: process.env["CONTENTFUL_SPACE_ID"] || "",
+  accessToken: process.env["CONTENTFUL_ACCESS_TOKEN"] || "",
+  environment: process.env["CONTENTFUL_ENVIRONMENT"] || "master",
 });
 
 async function fetchContentTypes() {

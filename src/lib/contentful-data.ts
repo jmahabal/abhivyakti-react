@@ -8,14 +8,18 @@ export function getContentfulData(): ContentfulData {
   return JSON.parse(rawData) as ContentfulData;
 }
 
-export function getLatestPlays(limit = 3) {
-  const data = getContentfulData();
-  return data.plays.slice(0, limit);
-}
-
 export function getAllPlays() {
   const data = getContentfulData();
-  return data.plays;
+  return data.plays.sort((a, b) => {
+    const dateA = a.fields.date ? new Date(String(a.fields.date)).getTime() : 0;
+    const dateB = b.fields.date ? new Date(String(b.fields.date)).getTime() : 0;
+    return dateB - dateA; // Sort in descending order (newest first)
+  });
+}
+
+export function getLatestPlays(limit = 3) {
+  const sortedPlays = getAllPlays();
+  return sortedPlays.slice(0, limit);
 }
 
 export function getAllCastMembers() {

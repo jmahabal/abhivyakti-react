@@ -6,8 +6,8 @@ import { config, validateConfig } from "./config";
 validateConfig();
 
 // After validation, we know these values exist
-const space = config.contentful.spaceId!;
-const accessToken = config.contentful.accessToken!;
+const space = config.contentful.spaceId as string;
+const accessToken = config.contentful.accessToken as string;
 
 export const contentfulClient = createClient({
   space,

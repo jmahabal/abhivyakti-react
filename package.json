@@ -12,7 +12,8 @@
     "lint": "next lint",
     "clean": "yarn cache clean && rm -rf node_modules .next",
     "reinstall": "yarn clean && yarn install",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "generate-favicons": "tsx scripts/generate-favicons.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
@@ -45,7 +46,8 @@
     "eslint-config-next": "15.2.3",
     "tailwindcss": "^4",
     "tsx": "^4.19.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "sharp": "^0.33.2"
   },
   "packageManager": "yarn@1.22.22"
 }

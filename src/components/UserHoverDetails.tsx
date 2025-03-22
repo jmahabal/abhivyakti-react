@@ -5,7 +5,10 @@ import type {
   PlayFields,
 } from "@/types/contentful";
 import { HoverCardContent } from "@/components/ui/hover-card";
-import { getPlaysByPerson } from "@/utils/content-helpers";
+import {
+  getPlaysByPerson,
+  formatDateWithOrdinal,
+} from "@/utils/content-helpers";
 
 interface UserHoverDetailsProps {
   userId: string;
@@ -26,20 +29,22 @@ export function UserHoverDetails({ userId, allPlays }: UserHoverDetailsProps) {
   const memberPlays = getPlaysByPerson(allPlays, userId);
 
   return (
-    <HoverCardContent align="start" className="w-80">
+    <HoverCardContent
+      align="center"
+      className="w-80 max-h-[400px] overflow-y-auto"
+    >
       <div className="space-y-4">
         <div>
-          <h4 className="text-lg font-semibold">
-            {String(member.fields.name)}
-          </h4>
-          {member.fields.hometown && (
-            <p className="text-sm text-muted-foreground">
-              {String(member.fields.hometown)}
-            </p>
-          )}
-          {member.fields.description && (
-            <p className="mt-2 text-sm">{String(member.fields.description)}</p>
-          )}
+          <div className="space-y-1">
+            <h4 className="text-sm font-semibold">
+              {String(member.fields.name)}
+            </h4>
+            {member.fields.description && (
+              <p className="text-sm text-muted-foreground">
+                {String(member.fields.description)}
+              </p>
+            )}
+          </div>
         </div>
         <div>
           <h5 className="font-medium mb-2">Productions</h5>
@@ -60,13 +65,7 @@ export function UserHoverDetails({ userId, allPlays }: UserHoverDetailsProps) {
                   (c: Entry<CastMemberEntry>) => c.sys.id === userId
                 ) ?? false;
               const fields = memberPlay.fields as PlayFields;
-              const playDate =
-                typeof fields.date === "string"
-                  ? new Date(fields.date).toLocaleDateString("en-US", {
-                      month: "long",
-                      year: "numeric",
-                    })
-                  : null;
+              const playDate = formatDateWithOrdinal(fields.date);
 
               return (
                 <li key={memberPlay.sys.id} className="text-sm">

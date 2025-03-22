@@ -5,7 +5,11 @@ import type {
   CastMemberEntry,
   PlayFields,
 } from "@/types/contentful";
-import { getAssetUrl, getCastAndCrew } from "@/utils/content-helpers";
+import {
+  getAssetUrl,
+  getCastAndCrew,
+  formatDateWithOrdinal,
+} from "@/utils/content-helpers";
 import {
   Card,
   CardContent,
@@ -33,14 +37,7 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
     ? String(play.fields.description)
     : undefined;
   const fields = play.fields as PlayFields;
-  const date =
-    typeof fields.date === "string"
-      ? new Date(fields.date).toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        })
-      : null;
+  const date = formatDateWithOrdinal(fields.date);
   const location = play.fields.location
     ? String(play.fields.location)
     : undefined;
@@ -53,36 +50,38 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
     <Card
       className={cn(
         "overflow-hidden border rounded shadow-none",
-        photoUrl && "!py-0"
+        photoUrl && "!py-0 !px-0"
       )}
     >
       {photoUrl && (
-        <div className="relative max-h-[300px] overflow-hidden">
+        <div className="relative h-[240px] w-full">
           <Image
             src={`https:${photoUrl}`}
             alt={title}
-            width={800}
-            height={600}
-            className="w-full object-cover"
+            fill
+            className="object-cover object-top"
+            priority
           />
         </div>
       )}
-      <div className="p-6">
-        <CardHeader className="space-y-2 px-0 pt-0">
+      <div className={cn("p-6", photoUrl && "!px-0")}>
+        <CardHeader className="px-0 pt-0 mb-4">
           <CardTitle className="text-2xl">{title}</CardTitle>
           {playwright && (
             <CardDescription className="text-base">
               {playwright}
             </CardDescription>
           )}
-          <div className="text-sm mb-4">
+          <div className="text-sm my-4">
             {date && <p>{date}</p>}
             {location && <p>{location}</p>}
           </div>
         </CardHeader>
-        <CardContent className="space-y-4 px-0 pt-0">
+        <CardContent className="space-y-8 px-0 pt-0 overflow-hidden">
           {description && (
-            <p className="text-base text-muted-foreground">{description}</p>
+            <p className="text-base text-muted-foreground whitespace-pre-wrap">
+              {description}
+            </p>
           )}
           {cast.length > 0 && (
             <div className="space-y-1">

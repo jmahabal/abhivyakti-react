@@ -1,24 +1,42 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { Roboto } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
+  variable: "--font-geist-mono",
 });
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-roboto",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {
-    default: "अभिव्यक्ति",
-    template: "%s | अभिव्यक्ति",
+    default: "अभिव्यक्ति / Abhivyakti",
+    template: "%s | अभिव्यक्ति / Abhivyakti",
   },
   description:
     "अभिव्यक्ति is a Marathi theater group dedicated to bringing powerful performances and storytelling to the stage.",
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/icon-180x180.png",
+  },
   keywords: [
     "theater",
     "drama",
@@ -28,9 +46,9 @@ export const metadata: Metadata = {
     "अभिव्यक्ति",
     "abhivyakti",
   ],
-  authors: [{ name: "अभिव्यक्ति" }],
+  authors: [{ name: "Anu Kanetkar Mahabal" }, { name: "Jay Mahabal" }],
   openGraph: {
-    title: "अभिव्यक्ति",
+    title: "अभिव्यक्ति / Abhivyakti",
     description:
       "अभिव्यक्ति is a Marathi theater group dedicated to bringing powerful performances and storytelling to the stage.",
     type: "website",
@@ -38,13 +56,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "अभिव्यक्ति",
+    title: "अभिव्यक्ति / Abhivyakti",
     description:
       "अभिव्यक्ति is a Marathi theater group dedicated to bringing powerful performances and storytelling to the stage.",
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
   },
   robots: {
     index: true,
@@ -60,7 +74,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${roboto.className} ${geistMono.variable} 
+          ${playfair.variable}
+          antialiased`}
       >
         {children}
       </body>
