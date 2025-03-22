@@ -1,7 +1,22 @@
-import type { NextConfig } from "next";
+import { type NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const config: NextConfig = {
+  env: {
+    CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID!,
+    CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN!,
+    CONTENTFUL_PREVIEW_ACCESS_TOKEN:
+      process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN!,
+    CONTENTFUL_ENVIRONMENT: process.env.CONTENTFUL_ENVIRONMENT || "master",
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.ctfassets.net",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
-export default nextConfig;
+export default config;
