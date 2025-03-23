@@ -26,7 +26,7 @@ The site automatically fetches content from Contentful during the build process.
 
 1. Go to the repository on GitHub and navigate to `version.json`
 2. Click the pencil icon (Edit this file) in the top-right corner of the file view
-3. Update the version number and date:
+3. Update the version number:
    ```json
    {
      "version": "1.0.1" // Increment this number
