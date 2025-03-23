@@ -9,9 +9,9 @@ The official website for Abhivyakti, Los Angeles' premier Marathi theater group.
    ```bash
    yarn install
    ```
-3. Copy `.env.example` to `.env.local` and fill in your Contentful credentials:
+3. Copy `.env.local.example` to `.env.local` and fill in your Contentful credentials:
    ```bash
-   cp .env.example .env.local
+   cp .env.local.example .env.local
    ```
 4. Run the development server:
    ```bash
