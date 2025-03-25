@@ -3,6 +3,7 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 import type { Metadata, Viewport } from "next";
+import { Navigation } from "@/components/layout/Navigation";
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
@@ -72,13 +73,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
         className={`${roboto.className} ${geistMono.variable} 
           ${playfair.variable}
-          antialiased`}
+          flex min-h-screen flex-col antialiased`}
       >
-        {children}
+        <Navigation />
+        <main className="flex-1 pt-[56px]">{children}</main>
       </body>
     </html>
   );
