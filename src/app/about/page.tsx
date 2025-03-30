@@ -33,7 +33,9 @@ export default function AboutPage() {
                   size="lg"
                   className="bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800"
                 >
-                  <Link href="/donate">Support Our Mission</Link>
+                  <Link href="https://bit.ly/abhivyakti-donation" target="_blank" rel="noopener noreferrer">
+                    Support Our Mission
+                  </Link>
                 </Button>
               </div>
             </div>
