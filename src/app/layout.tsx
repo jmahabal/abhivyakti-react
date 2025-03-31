@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import { Navigation } from "@/components/layout/Navigation";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
@@ -81,6 +82,7 @@ export default function RootLayout({
       >
         <Navigation />
         <main className="flex-1 pt-[56px]">{children}</main>
+        <Analytics />
       </body>
     </html>
   );
