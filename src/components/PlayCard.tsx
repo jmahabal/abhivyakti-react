@@ -28,7 +28,7 @@ interface PlayCardProps {
 
 export function PlayCard({ play, allPlays }: PlayCardProps) {
   const photoUrl = getAssetUrl(play.fields.photo);
-  const { directors, cast } = getCastAndCrew(play);
+  const { directors, cast, backstage } = getCastAndCrew(play);
   const title = String(play.fields.title || "Untitled Play");
   const playwright = play.fields.playwright
     ? String(play.fields.playwright)
@@ -44,6 +44,8 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
 
   const castMembers = (play.fields.cast || []) as Entry<CastMemberEntry>[];
   const directorMembers = (play.fields.director ||
+    []) as Entry<CastMemberEntry>[];
+  const backstageMembers = (play.fields.backstage ||
     []) as Entry<CastMemberEntry>[];
 
   return (
@@ -64,7 +66,7 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
           />
         </div>
       )}
-      <div className={cn("p-6", photoUrl && "!px-0")}>
+      <div className={cn(photoUrl ? "px-0" : "p-6", "pb-6")}>
         <CardHeader className="px-0 pt-0 mb-4">
           <CardTitle className="text-2xl">{title}</CardTitle>
           {playwright && (
@@ -77,7 +79,12 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
             {location && <p>{location}</p>}
           </div>
         </CardHeader>
-        <CardContent className="space-y-8 px-0 pt-0 overflow-hidden">
+        <CardContent
+          className={cn(
+            "space-y-8 pt-0 w-full overflow-hidden",
+            photoUrl ? "px-8" : "px-0"
+          )}
+        >
           {description && (
             <p className="text-base text-muted-foreground whitespace-pre-wrap">
               {description}
@@ -85,10 +92,38 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
           )}
           {cast.length > 0 && (
             <div className="space-y-1">
-              <h4 className="font-medium">Cast</h4>
+              <h4 className="font-medium text-left">Cast</h4>
               <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5">
                 {castMembers.map((member, index) => (
-                  <li key={`cast-${member.sys.id}-${index}`}>
+                  <li
+                    key={`cast-${member.sys.id}-${index}`}
+                    className="text-left"
+                  >
+                    <HoverCard openDelay={150} closeDelay={150}>
+                      <HoverCardTrigger asChild>
+                        <button className="text-sm hover:text-primary cursor-pointer">
+                          {String(member.fields.name)}
+                        </button>
+                      </HoverCardTrigger>
+                      <UserHoverDetails
+                        userId={member.sys.id}
+                        allPlays={allPlays}
+                      />
+                    </HoverCard>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {backstage.length > 0 && (
+            <div className="space-y-1">
+              <h4 className="font-medium text-left">Backstage</h4>
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5">
+                {backstageMembers.map((member, index) => (
+                  <li
+                    key={`backstage-${member.sys.id}-${index}`}
+                    className="text-left"
+                  >
                     <HoverCard openDelay={150} closeDelay={150}>
                       <HoverCardTrigger asChild>
                         <button className="text-sm hover:text-primary cursor-pointer">
@@ -107,10 +142,13 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
           )}
           {directors.length > 0 && (
             <div className="space-y-1">
-              <h4 className="font-medium">Direction</h4>
+              <h4 className="font-medium text-left">Direction</h4>
               <ul className="list-none space-y-0.5">
                 {directorMembers.map((member, index) => (
-                  <li key={`director-${member.sys.id}-${index}`}>
+                  <li
+                    key={`director-${member.sys.id}-${index}`}
+                    className="text-left"
+                  >
                     <HoverCard openDelay={150} closeDelay={150}>
                       <HoverCardTrigger asChild>
                         <button className="text-sm hover:text-primary cursor-pointer">

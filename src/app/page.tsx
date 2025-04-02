@@ -1,8 +1,8 @@
 import { getHomePage } from "@/lib/contentful-data";
 import { getAssetUrl } from "@/utils/content-helpers";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
 import Image from "next/image";
+import { DonateSection } from "@/components/DonateSection";
 
 export default function HomePage() {
   const homePage = getHomePage();
@@ -10,24 +10,23 @@ export default function HomePage() {
   const heroImageUrl = getAssetUrl(homePage?.fields.homepageHeroImage);
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 py-8 px-4">
-      <div className="mx-auto max-w-5xl space-y-1 text-lg text-center">
-        <p>
-          Abhivyakti is Los Angeles&apos; premier Marathi theater group,
-          dedicated to bringing powerful performances and storytelling to
-          the stage. Our mission is to preserve and promote Marathi
-          culture and theatrical arts in Southern California.
-        </p>
-        </div>
+    <div className="mx-auto max-w-[920px] space-y-10 py-24 md:py-16 px-4 flex flex-col items-start text-center ">
+      <p className="max-w-[65ch] mx-auto text-lg">
+        Abhivyakti is Los Angeles’ premier Marathi theater group, dedicated to
+        bringing powerful performances and storytelling to the stage. Our
+        mission is to preserve and promote Marathi culture and theatrical arts
+        in Southern California.
+      </p>
+
       {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] w-full overflow-hidden rounded">
+      <section className="relative w-full aspect-[16/9] overflow-hidden rounded">
         {heroImageUrl ? (
           <Image
             src={`https:${heroImageUrl}`}
             alt="Abhivyakti Hero"
             fill
-            className="absolute inset-0 h-full w-full object-contain"
             priority
+            className="object-cover"
           />
         ) : heroVideoUrl ? (
           <>
@@ -53,23 +52,7 @@ export default function HomePage() {
         ) : null}
       </section>
 
-      {/* Content Section */}
-      <div className="mx-auto max-w-5xl space-y-1 text-lg text-center">    
-        <div className="mt-2">
-          <p className="mb-2 text-sm text-gray-600">
-            Abhivyakti is a 501(c)(3) tax-exempt non-profit organization.
-          </p>
-          <Button
-            asChild
-            size="lg"
-            className="bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800"
-          >
-            <Link href="https://bit.ly/abhivyakti-donation" target="_blank" rel="noopener noreferrer">
-              Support Our Mission
-            </Link>
-          </Button>
-        </div>
-      </div>
+      <DonateSection className="mx-auto" />
     </div>
   );
 }
