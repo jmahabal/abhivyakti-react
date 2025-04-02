@@ -1,8 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Mail } from "lucide-react";
 import { CONTACT_INFO } from "@/lib/constants";
+import { DonateSection } from "@/components/DonateSection";
 
 export default function AboutPage() {
   return (
@@ -24,20 +23,7 @@ export default function AboutPage() {
                 create compelling theatrical experiences that resonate with
                 audiences of all backgrounds.
               </p>
-              <div className="mt-12">
-                <p className="mb-4 text-sm text-gray-600">
-                  Abhivyakti is a 501(c)(3) tax-exempt non-profit organization.
-                </p>
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800"
-                >
-                  <Link href="https://bit.ly/abhivyakti-donation" target="_blank" rel="noopener noreferrer">
-                    Support Our Mission
-                  </Link>
-                </Button>
-              </div>
+              <DonateSection className="mt-12" />
             </div>
           </div>
         </section>

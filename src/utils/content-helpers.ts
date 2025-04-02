@@ -37,13 +37,18 @@ export const getPlaysByPerson = (
     const directors = play.fields.director as
       | Entry<CastMemberEntry>[]
       | undefined;
+    const backstageMembers = play.fields.backstage as
+      | Entry<CastMemberEntry>[]
+      | undefined;
 
     const inCast =
       castMembers?.some((actor) => actor.sys.id === memberId) ?? false;
     const inDirectors =
       directors?.some((director) => director.sys.id === memberId) ?? false;
+    const inBackstage =
+      backstageMembers?.some((member) => member.sys.id === memberId) ?? false;
 
-    return inCast || inDirectors;
+    return inCast || inDirectors || inBackstage;
   });
 };
 
@@ -51,6 +56,8 @@ export const getCastAndCrew = (play: Entry<PlayEntry>) => {
   const directorEntries = (play.fields.director ??
     []) as Entry<CastMemberEntry>[];
   const castEntries = (play.fields.cast ?? []) as Entry<CastMemberEntry>[];
+  const backstageEntries = (play.fields.backstage ??
+    []) as Entry<CastMemberEntry>[];
 
   const directors = directorEntries
     .map((d) => String(d.fields.name))
@@ -58,8 +65,13 @@ export const getCastAndCrew = (play: Entry<PlayEntry>) => {
 
   const cast = castEntries.map((c) => String(c.fields.name)).filter(Boolean);
 
+  const backstage = backstageEntries
+    .map((b) => String(b.fields.name))
+    .filter(Boolean);
+
   return {
     directors,
     cast,
+    backstage,
   };
 };

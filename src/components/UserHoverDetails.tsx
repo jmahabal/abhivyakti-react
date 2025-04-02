@@ -21,6 +21,7 @@ export function UserHoverDetails({ userId, allPlays }: UserHoverDetailsProps) {
     .flatMap((play) => [
       ...((play.fields.cast || []) as Entry<CastMemberEntry>[]),
       ...((play.fields.director || []) as Entry<CastMemberEntry>[]),
+      ...((play.fields.backstage || []) as Entry<CastMemberEntry>[]),
     ])
     .find((person) => person.sys.id === userId);
 
@@ -36,24 +37,21 @@ export function UserHoverDetails({ userId, allPlays }: UserHoverDetailsProps) {
       <div className="space-y-4">
         <div>
           <div className="space-y-1">
-            <h4 className="text-sm font-semibold">
+            <h4 className="text-md font-semibold">
               {String(member.fields.name)}
             </h4>
-            {member.fields.description && (
-              <p className="text-sm text-muted-foreground">
-                {String(member.fields.description)}
-              </p>
-            )}
           </div>
         </div>
         <div>
-          <h5 className="font-medium mb-2">Productions</h5>
           <ul className="space-y-2">
             {memberPlays.map((memberPlay) => {
               const playDirectors = memberPlay.fields.director as
                 | Entry<CastMemberEntry>[]
                 | undefined;
               const playCast = memberPlay.fields.cast as
+                | Entry<CastMemberEntry>[]
+                | undefined;
+              const playBackstage = memberPlay.fields.backstage as
                 | Entry<CastMemberEntry>[]
                 | undefined;
               const isDirector =
@@ -63,6 +61,10 @@ export function UserHoverDetails({ userId, allPlays }: UserHoverDetailsProps) {
               const isCast =
                 playCast?.some(
                   (c: Entry<CastMemberEntry>) => c.sys.id === userId
+                ) ?? false;
+              const isBackstage =
+                playBackstage?.some(
+                  (b: Entry<CastMemberEntry>) => b.sys.id === userId
                 ) ?? false;
               const fields = memberPlay.fields as PlayFields;
               const playDate = formatDateWithOrdinal(fields.date);
@@ -75,8 +77,10 @@ export function UserHoverDetails({ userId, allPlays }: UserHoverDetailsProps) {
                     </span>
                     <div className="text-muted-foreground">
                       {isCast && "Cast"}
-                      {isCast && isDirector && " & "}
+                      {isCast && (isDirector || isBackstage) && " & "}
                       {isDirector && "Director"}
+                      {isDirector && isBackstage && " & "}
+                      {isBackstage && "Backstage"}
                       {playDate && ` • ${playDate}`}
                     </div>
                   </div>
