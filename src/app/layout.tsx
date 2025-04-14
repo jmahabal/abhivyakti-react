@@ -1,7 +1,7 @@
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Roboto } from "next/font/google";
-import { Playfair_Display } from "next/font/google";
+import { Arbutus_Slab } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import { Navigation } from "@/components/layout/Navigation";
 import { Analytics } from "@vercel/analytics/react";
@@ -17,9 +17,10 @@ const roboto = Roboto({
   variable: "--font-roboto",
 });
 
-const playfair = Playfair_Display({
+const arbutusSlab = Arbutus_Slab({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: "400",
+  variable: "--font-arbutus-slab",
 });
 
 export const viewport: Viewport = {
@@ -77,7 +78,7 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body
         className={`${roboto.className} ${geistMono.variable} 
-          ${playfair.variable}
+          ${arbutusSlab.variable}
           flex min-h-screen flex-col antialiased`}
       >
         <Navigation />

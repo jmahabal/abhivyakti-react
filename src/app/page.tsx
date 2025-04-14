@@ -41,7 +41,7 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-black/65">
               <div className="flex h-full items-center justify-center">
                 <div className="text-center text-white">
-                  <h1 className="mb-4 text-4xl font-playfair md:text-6xl">
+                  <h1 className="mb-4 text-4xl font-arbutus-slab md:text-6xl">
                     अभिव्यक्ती / Abhivyakti
                   </h1>
                   <p>Los Angeles&apos; premier Marathi theater group</p>

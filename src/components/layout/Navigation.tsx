@@ -22,7 +22,7 @@ export function Navigation() {
               height={40}
               className="h-10 w-auto"
             />
-            <span className="text-2xl font-playfair">
+            <span className="text-2xl font-arbutus-slab">
               अभिव्यक्ति / Abhivyakti
             </span>
           </Link>
