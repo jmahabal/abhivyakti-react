@@ -3,14 +3,15 @@ import { PlayCard } from "@/components/PlayCard";
 import { notFound } from "next/navigation";
 
 interface PlayPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function PlayPage({ params }: PlayPageProps) {
+export default async function PlayPage({ params }: PlayPageProps) {
+  const { id } = await params;
   const plays = getAllPlays();
-  const play = plays.find((p) => p.sys.id === params.id);
+  const play = plays.find((p) => p.sys.id === id);
 
   if (!play) {
     notFound();

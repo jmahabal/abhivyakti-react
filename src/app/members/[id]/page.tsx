@@ -3,15 +3,16 @@ import { CastMemberDetails } from "@/components/CastMemberDetails";
 import { notFound } from "next/navigation";
 
 interface MemberPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function MemberPage({ params }: MemberPageProps) {
+export default async function MemberPage({ params }: MemberPageProps) {
+  const { id } = await Promise.resolve(params);
   const castMembers = getAllCastMembers();
   const plays = getAllPlays();
-  const member = castMembers.find((m) => m.sys.id === params.id);
+  const member = castMembers.find((m) => m.sys.id === id);
 
   if (!member) {
     notFound();
