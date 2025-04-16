@@ -1,7 +1,14 @@
+"use client";
+
 import type { Entry } from "contentful";
 import type { CastMemberEntry, PlayEntry } from "@/types/contentful";
-import { HoverCard, HoverCardTrigger } from "@/components/ui/hover-card";
-import { UserHoverDetails } from "@/components/UserHoverDetails";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useState } from "react";
+import { CastMemberDetails } from "@/components/CastMemberDetails";
 
 interface CastMemberCardProps {
   member: Entry<CastMemberEntry>;
@@ -10,15 +17,20 @@ interface CastMemberCardProps {
 
 export function CastMemberCard({ member, allPlays }: CastMemberCardProps) {
   const name = String(member.fields.name ?? "Cast Member");
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <HoverCard openDelay={150} closeDelay={150}>
-      <HoverCardTrigger asChild>
-        <div className="text-center cursor-pointer">
-          <h3 className="text-xl hover:text-primary">{name}</h3>
-        </div>
-      </HoverCardTrigger>
-      <UserHoverDetails userId={member.sys.id} allPlays={allPlays} />
-    </HoverCard>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger
+        className="text-center"
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+      >
+        <h3 className="text-xl">{name}</h3>
+      </PopoverTrigger>
+      <PopoverContent className="w-80 max-h-[400px] overflow-y-auto">
+        <CastMemberDetails member={member} allPlays={allPlays} />
+      </PopoverContent>
+    </Popover>
   );
 }

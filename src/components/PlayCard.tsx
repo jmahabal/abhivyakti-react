@@ -101,7 +101,7 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
                   >
                     <HoverCard openDelay={150} closeDelay={150}>
                       <HoverCardTrigger asChild>
-                        <button className="text-sm hover:text-primary cursor-pointer">
+                        <button className="text-sm text-left cursor-pointer">
                           {String(member.fields.name)}
                         </button>
                       </HoverCardTrigger>
@@ -126,7 +126,7 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
                   >
                     <HoverCard openDelay={150} closeDelay={150}>
                       <HoverCardTrigger asChild>
-                        <button className="text-sm hover:text-primary cursor-pointer">
+                        <button className="text-sm text-left cursor-pointer">
                           {String(member.fields.name)}
                         </button>
                       </HoverCardTrigger>
@@ -151,7 +151,7 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
                   >
                     <HoverCard openDelay={150} closeDelay={150}>
                       <HoverCardTrigger asChild>
-                        <button className="text-sm hover:text-primary cursor-pointer">
+                        <button className="text-sm text-left cursor-pointer">
                           {String(member.fields.name)}
                         </button>
                       </HoverCardTrigger>
