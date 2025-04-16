@@ -17,8 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { HoverCard, HoverCardTrigger } from "@/components/ui/hover-card";
-import { UserHoverDetails } from "@/components/UserHoverDetails";
+import { CastMemberCard } from "@/components/CastMemberCard";
 import { cn } from "@/lib/utils";
 
 interface PlayCardProps {
@@ -99,17 +98,7 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
                     key={`cast-${member.sys.id}-${index}`}
                     className="text-left"
                   >
-                    <HoverCard openDelay={150} closeDelay={150}>
-                      <HoverCardTrigger asChild>
-                        <button className="text-sm text-left cursor-pointer">
-                          {String(member.fields.name)}
-                        </button>
-                      </HoverCardTrigger>
-                      <UserHoverDetails
-                        userId={member.sys.id}
-                        allPlays={allPlays}
-                      />
-                    </HoverCard>
+                    <CastMemberCard member={member} allPlays={allPlays} />
                   </li>
                 ))}
               </ul>
@@ -124,17 +113,7 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
                     key={`backstage-${member.sys.id}-${index}`}
                     className="text-left"
                   >
-                    <HoverCard openDelay={150} closeDelay={150}>
-                      <HoverCardTrigger asChild>
-                        <button className="text-sm text-left cursor-pointer">
-                          {String(member.fields.name)}
-                        </button>
-                      </HoverCardTrigger>
-                      <UserHoverDetails
-                        userId={member.sys.id}
-                        allPlays={allPlays}
-                      />
-                    </HoverCard>
+                    <CastMemberCard member={member} allPlays={allPlays} />
                   </li>
                 ))}
               </ul>
@@ -149,17 +128,7 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
                     key={`director-${member.sys.id}-${index}`}
                     className="text-left"
                   >
-                    <HoverCard openDelay={150} closeDelay={150}>
-                      <HoverCardTrigger asChild>
-                        <button className="text-sm text-left cursor-pointer">
-                          {String(member.fields.name)}
-                        </button>
-                      </HoverCardTrigger>
-                      <UserHoverDetails
-                        userId={member.sys.id}
-                        allPlays={allPlays}
-                      />
-                    </HoverCard>
+                    <CastMemberCard member={member} allPlays={allPlays} />
                   </li>
                 ))}
               </ul>
