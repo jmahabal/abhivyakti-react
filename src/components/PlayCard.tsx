@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 import type { Entry } from "contentful";
 import type {
   PlayEntry,
@@ -23,9 +26,14 @@ import { cn } from "@/lib/utils";
 interface PlayCardProps {
   play: Entry<PlayEntry>;
   allPlays: Entry<PlayEntry>[];
+  isDetailPage?: boolean;
 }
 
-export function PlayCard({ play, allPlays }: PlayCardProps) {
+export function PlayCard({
+  play,
+  allPlays,
+  isDetailPage = false,
+}: PlayCardProps) {
   const photoUrl = getAssetUrl(play.fields.photo);
   const { directors, cast, backstage } = getCastAndCrew(play);
   const title = String(play.fields.title || "Untitled Play");
@@ -47,27 +55,38 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
   const backstageMembers = (play.fields.backstage ||
     []) as Entry<CastMemberEntry>[];
 
-  return (
-    <Card
-      className={cn(
-        "overflow-hidden border rounded shadow-none",
-        photoUrl && "!py-0 !px-0"
-      )}
-    >
+  const content = (
+    <>
       {photoUrl && (
-        <div className="relative h-[240px] w-full">
-          <Image
-            src={`https:${photoUrl}`}
-            alt={title}
-            fill
-            className="object-cover object-top"
-            priority
-          />
+        <div className="relative w-full h-min">
+          {isDetailPage ? (
+            <Image
+              src={`https:${photoUrl}`}
+              alt={title}
+              fill
+              priority
+              className="max-w-3xl mx-auto h-min! relative!"
+            />
+          ) : (
+            <div className="relative w-full h-[240px]">
+              <Image
+                src={`https:${photoUrl}`}
+                alt={title}
+                fill
+                className="object-cover object-top"
+                priority
+              />
+            </div>
+          )}
         </div>
       )}
       <div className={cn(photoUrl ? "px-0" : "p-6", "pb-6")}>
         <CardHeader className="px-0 pt-0 mb-4">
-          <CardTitle className="text-2xl">{title}</CardTitle>
+          <Link href={`/plays/${play.sys.id}`}>
+            <CardTitle className="text-2xl transition-colors">
+              {title}
+            </CardTitle>
+          </Link>
           {playwright && (
             <CardDescription className="text-base">
               {playwright}
@@ -81,7 +100,118 @@ export function PlayCard({ play, allPlays }: PlayCardProps) {
         <CardContent
           className={cn(
             "space-y-8 pt-0 w-full overflow-hidden",
-            photoUrl ? "px-8" : "px-0"
+            photoUrl && !isDetailPage ? "px-8" : "px-0"
+          )}
+        >
+          {description && (
+            <p className="text-base text-muted-foreground whitespace-pre-wrap">
+              {description}
+            </p>
+          )}
+          {cast.length > 0 && (
+            <div className="space-y-1">
+              <h4 className="font-medium text-left">Cast</h4>
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5">
+                {castMembers.map((member, index) => (
+                  <li
+                    key={`cast-${member.sys.id}-${index}`}
+                    className="text-left"
+                  >
+                    <CastMemberCard member={member} allPlays={allPlays} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {backstage.length > 0 && (
+            <div className="space-y-1">
+              <h4 className="font-medium text-left">Backstage</h4>
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5">
+                {backstageMembers.map((member, index) => (
+                  <li
+                    key={`backstage-${member.sys.id}-${index}`}
+                    className="text-left"
+                  >
+                    <CastMemberCard member={member} allPlays={allPlays} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {directors.length > 0 && (
+            <div className="space-y-1">
+              <h4 className="font-medium text-left">Direction</h4>
+              <ul className="list-none space-y-0.5">
+                {directorMembers.map((member, index) => (
+                  <li
+                    key={`director-${member.sys.id}-${index}`}
+                    className="text-left"
+                  >
+                    <CastMemberCard member={member} allPlays={allPlays} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </CardContent>
+      </div>
+    </>
+  );
+
+  if (isDetailPage) {
+    return (
+      <Card
+        className={cn(
+          "overflow-hidden rounded shadow-none border-none",
+          photoUrl && "!py-0 !px-0"
+        )}
+      >
+        {content}
+      </Card>
+    );
+  }
+
+  return (
+    <Card
+      className={cn(
+        "overflow-hidden border rounded shadow-none",
+        photoUrl && "!py-0 !px-0"
+      )}
+    >
+      {photoUrl && (
+        <div className="relative w-full h-min">
+          <div className="relative w-full h-[240px]">
+            <Image
+              src={`https:${photoUrl}`}
+              alt={title}
+              fill
+              className="object-cover object-top"
+              priority
+            />
+          </div>
+        </div>
+      )}
+      <div className={cn(photoUrl ? "px-0" : "p-6", "pb-6")}>
+        <CardHeader className="px-0 pt-0 mb-4">
+          <Link href={`/plays/${play.sys.id}`}>
+            <CardTitle className="text-2xl transition-colors">
+              {title}
+            </CardTitle>
+          </Link>
+          {playwright && (
+            <CardDescription className="text-base">
+              {playwright}
+            </CardDescription>
+          )}
+          <div className="text-sm my-4">
+            {date && <p>{date}</p>}
+            {location && <p>{location}</p>}
+          </div>
+        </CardHeader>
+        <CardContent
+          className={cn(
+            "space-y-8 pt-0 w-full overflow-hidden",
+            photoUrl && !isDetailPage ? "px-8" : "px-0"
           )}
         >
           {description && (

@@ -10,21 +10,24 @@ import {
   getPlaysByPerson,
   formatDateWithOrdinal,
 } from "@/utils/content-helpers";
+import { cn } from "@/lib/utils";
 
 interface CastMemberDetailsProps {
   member: Entry<CastMemberEntry>;
   allPlays: Entry<PlayEntry>[];
+  isDetailPage?: boolean;
 }
 
 export function CastMemberDetails({
   member,
   allPlays,
+  isDetailPage = false,
 }: CastMemberDetailsProps) {
   const name = String(member.fields.name ?? "Cast Member");
   const memberPlays = getPlaysByPerson(allPlays, member.sys.id);
 
   return (
-    <div className="space-y-4">
+    <div className={cn("space-y-4", isDetailPage && "text-center")}>
       <h4 className="text-md font-semibold">{name}</h4>
       <ul className="space-y-2">
         {memberPlays.map((memberPlay) => {
