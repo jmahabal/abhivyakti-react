@@ -32,6 +32,7 @@ export interface CastMemberFields {
   description?: string;
   contactInformation?: string;
   photo?: ContentfulAsset;
+  hometown?: string;
 }
 
 export interface PlayFields {

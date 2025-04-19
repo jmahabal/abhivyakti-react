@@ -19,7 +19,7 @@ export default async function PlayPage({ params }: PlayPageProps) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-24 md:py-16">
-      <PlayCard play={play} allPlays={plays} isDetailPage />
+      <PlayCard play={play} isDetailPage />
     </div>
   );
 }

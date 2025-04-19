@@ -1,9 +1,8 @@
-import { getAllCastMembers, getAllPlays } from "@/lib/contentful-data";
-import { CastMemberCard } from "@/components/CastMemberCard";
+import { getAllCastMembers } from "@/lib/contentful-data";
+import { Link } from "@/components/ui/link";
 
 export default function MembersPage() {
   const castMembers = getAllCastMembers();
-  const plays = getAllPlays();
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-24 md:py-16">
@@ -16,11 +15,13 @@ export default function MembersPage() {
             )
           )
           .map((member) => (
-            <CastMemberCard
+            <Link
               key={member.sys.id}
-              member={member}
-              allPlays={plays}
-            />
+              href={`/members/${member.sys.id}`}
+              className="text-center"
+            >
+              {String(member.fields.name ?? "Cast Member")}
+            </Link>
           ))}
       </div>
     </div>
