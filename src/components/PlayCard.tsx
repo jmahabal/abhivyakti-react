@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/card";
 import { Link } from "@/components/ui/link";
 import { cn } from "@/lib/utils";
+import { CastCrewSection } from "@/components/CastCrewSection";
 
 interface PlayCardProps {
   play: Entry<PlayEntry>;
@@ -101,55 +102,13 @@ export function PlayCard({ play, isDetailPage = false }: PlayCardProps) {
             </p>
           )}
           {cast.length > 0 && (
-            <div className="space-y-1">
-              <h4 className="font-medium text-left">Cast</h4>
-              <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5">
-                {castMembers.map((member, index) => (
-                  <li
-                    key={`cast-${member.sys.id}-${index}`}
-                    className="text-left"
-                  >
-                    <Link href={`/members/${member.sys.id}`}>
-                      {String(member.fields.name ?? "Cast Member")}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <CastCrewSection title="Cast" members={castMembers} />
           )}
           {backstage.length > 0 && (
-            <div className="space-y-1">
-              <h4 className="font-medium text-left">Backstage</h4>
-              <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5">
-                {backstageMembers.map((member, index) => (
-                  <li
-                    key={`backstage-${member.sys.id}-${index}`}
-                    className="text-left"
-                  >
-                    <Link href={`/members/${member.sys.id}`}>
-                      {String(member.fields.name ?? "Cast Member")}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <CastCrewSection title="Backstage" members={backstageMembers} />
           )}
           {directors.length > 0 && (
-            <div className="space-y-1">
-              <h4 className="font-medium text-left">Direction</h4>
-              <ul className="list-none space-y-0.5">
-                {directorMembers.map((member, index) => (
-                  <li
-                    key={`director-${member.sys.id}-${index}`}
-                    className="text-left"
-                  >
-                    <Link href={`/members/${member.sys.id}`}>
-                      {String(member.fields.name ?? "Cast Member")}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <CastCrewSection title="Direction" members={directorMembers} />
           )}
         </CardContent>
       </div>
