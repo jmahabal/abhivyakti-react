@@ -18,39 +18,27 @@ export default function HomePage() {
         in Southern California.
       </p>
 
-      {/* Hero Section */}
-      <section className="relative w-full aspect-[16/9] overflow-hidden rounded">
-        {heroImageUrl ? (
+      {heroImageUrl ? (
+        <section className="relative w-full aspect-[16/9] overflow-hidden rounded">
           <Image
             src={`https:${heroImageUrl}`}
             alt="Abhivyakti Hero"
             fill
             priority
             className="object-cover"
+          /></section>
+      ) : heroVideoUrl ? (
+        <section className="relative w-full mx-auto max-w-[640px]">
+          <video
+            src={`https:${heroVideoUrl}`}
+            autoPlay
+            muted
+            loop
+            playsInline
           />
-        ) : heroVideoUrl ? (
-          <>
-            <video
-              src={`https:${heroVideoUrl}`}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/65">
-              <div className="flex h-full items-center justify-center">
-                <div className="text-center text-white">
-                  <h1 className="mb-4 text-4xl font-arbutus-slab md:text-6xl">
-                    अभिव्यक्ती / Abhivyakti
-                  </h1>
-                  <p>Los Angeles&apos; premier Marathi theater group</p>
-                </div>
-              </div>
-            </div>
-          </>
-        ) : null}
-      </section>
+        </section>
+      ) : null}
+
 
       <DonateSection className="mx-auto" />
     </div>
